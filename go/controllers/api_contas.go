@@ -15,7 +15,9 @@ import (
 	"net/http"
 )
 
+//Accounts returne all accounts
 func (c *Controller) Accounts(w http.ResponseWriter, r *http.Request) {
+
 	accounts, err := c.Db.FindAllAccounts()
 
 	if err != nil {

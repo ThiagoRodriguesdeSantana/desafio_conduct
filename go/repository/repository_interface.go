@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/model"
+import "github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/model"
 
 //IRepositoryInterface inteface data base
 type IRepositoryInterface interface {

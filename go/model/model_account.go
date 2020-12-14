@@ -11,7 +11,7 @@
 package model
 
 type Account struct {
-	Id string `json:"id,omitempty"`
+	Id string `json:"id"`
 
-	Status string `json:"status,omitempty"`
+	Status string `json:"status"`
 }

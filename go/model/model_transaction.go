@@ -11,12 +11,11 @@
 package model
 
 type Transaction struct {
+	Id string `json:"id" pdf:"false"`
 
-	Id string `json:"id,omitempty"`
+	AccountId string `json:"id_conta" pdf:"true" size:"100" header:"Conta"`
 
-	AccountId string `json:"accountId,omitempty"`
+	Description string `json:"descricao" pdf:"true" size:"50" header:"Transacao"`
 
-	Description string `json:"description,omitempty"`
-
-	Value float32 `json:"value,omitempty"`
+	Value float64 `json:"valor" pdf:"true" size:"50" header:"Valor"`
 }

@@ -15,11 +15,12 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/go-server-server/go/controllers"
-	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/go-server-server/go/repository"
+	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/controllers"
+	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/repository"
 	"github.com/gorilla/mux"
 )
 
+//Route struct
 type Route struct {
 	Name        string
 	Method      string
@@ -27,15 +28,52 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
+//Routes to api
 type Routes []Route
 
-var controller *controllers.Controller
+//NewRouter routes to api
+func NewRouter(pathDb string) *mux.Router {
 
-func NewRouter() *mux.Router {
+	db := repository.InitDB(pathDb)
 
-	db := repository.InitDB()
+	controller := controllers.NewController(db)
 
-	controller = controllers.NewController(db)
+	var routes = Routes{
+		Route{
+			"Index",
+			"GET",
+			"/v1/",
+			Index,
+		},
+
+		Route{
+			"Account",
+			strings.ToUpper("Get"),
+			"/conductor/v1/contas/{id}",
+			controller.Account,
+		},
+
+		Route{
+			"Accounts",
+			strings.ToUpper("Get"),
+			"/conductor/v1/contas/",
+			controller.Accounts,
+		},
+
+		Route{
+			"Transactions",
+			strings.ToUpper("Get"),
+			"/conductor/v1/contas/{id}/transacoes/",
+			controller.Transactions,
+		},
+
+		Route{
+			"TransactionsPdf",
+			strings.ToUpper("Get"),
+			"/conductor/v1/contas/{id}/transacoes.pdf/",
+			controller.TransactionsPDF,
+		},
+	}
 
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
@@ -50,39 +88,13 @@ func NewRouter() *mux.Router {
 			Handler(handler)
 	}
 
+	sh := http.StripPrefix("/swaggerui/", http.FileServer(http.Dir("./go/swaggerui/")))
+	router.PathPrefix("/swaggerui/").Handler(sh)
+
 	return router
 }
 
+//Index to first endpoint
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World!")
-}
-
-var routes = Routes{
-	Route{
-		"Index",
-		"GET",
-		"/v1/",
-		Index,
-	},
-
-	Route{
-		"Account",
-		strings.ToUpper("Get"),
-		"/v1/contas/{id}",
-		controller.Account,
-	},
-
-	Route{
-		"Accounts",
-		strings.ToUpper("Get"),
-		"/v1/contas",
-		controller.Accounts,
-	},
-
-	Route{
-		"Transactions",
-		strings.ToUpper("Get"),
-		"/v1/contas/{id}/transacoes",
-		controller.Transactions,
-	},
 }

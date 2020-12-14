@@ -7,8 +7,10 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
+	"strings"
 
-	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/model"
+	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/model"
+	//Drive to sqlite3
 	_ "github.com/mattn/go-sqlite3"
 	uuidPkg "github.com/nu7hatch/gouuid"
 )
@@ -23,14 +25,23 @@ func (db *SqliteDb) CloseDb() {
 	db.dbInstanse.Close()
 }
 
-//InitDB initialize db
-func InitDB() *SqliteDb {
+const (
+	//PathDB const to path of the Data Base
+	PathDB = "../sqlite-database.db"
+)
 
-	fileinfo, _ := os.Stat("sqlite-database.db")
+//InitDB initialize db
+func InitDB(pathDb string) *SqliteDb {
+
+	if len(pathDb) == 0 || !strings.Contains(pathDb, ".db") {
+		pathDb = PathDB
+	}
+
+	fileinfo, _ := os.Stat(pathDb)
 
 	if fileinfo == nil {
 		log.Println("Creating sqlite-database.db...")
-		file, err := os.Create("sqlite-database.db")
+		file, err := os.Create(pathDb)
 		if err != nil {
 			log.Fatal(err.Error())
 		}
@@ -38,7 +49,7 @@ func InitDB() *SqliteDb {
 		log.Println("sqlite-database.db created")
 	}
 
-	instanse, err := sql.Open("sqlite3", "./sqlite-database.db")
+	instanse, err := sql.Open("sqlite3", pathDb)
 
 	if err != nil {
 		fmt.Println(err)
@@ -169,6 +180,7 @@ func (db *SqliteDb) insertTransaction(transaction model.Transaction) {
 //FindAllAccounts get all accounts
 func (db *SqliteDb) FindAllAccounts() ([]model.Account, error) {
 
+	fmt.Println("enrtou aqui")
 	row, err := db.dbInstanse.Query("SELECT * FROM accounts")
 	if err != nil {
 		return nil, err

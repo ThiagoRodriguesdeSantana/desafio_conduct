@@ -11,13 +11,16 @@
 package controllers
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 
-	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/file"
+	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/file"
 	"github.com/gorilla/mux"
 )
 
+//TransactionsPDF return pdf from transactions
 func (c *Controller) TransactionsPDF(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
@@ -31,5 +34,12 @@ func (c *Controller) TransactionsPDF(w http.ResponseWriter, r *http.Request) {
 
 	filePdf, _ := ioutil.ReadFile(path)
 
+	err := os.Remove(path)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	w.Write(filePdf)
+
 }

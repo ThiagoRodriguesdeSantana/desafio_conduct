@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/model"
+	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/model"
 	"github.com/jung-kurt/gofpdf"
 )
 

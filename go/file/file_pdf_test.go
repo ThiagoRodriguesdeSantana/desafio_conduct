@@ -3,7 +3,7 @@ package file
 import (
 	"testing"
 
-	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/model"
+	"github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/model"
 )
 
 func TestFile(t *testing.T) {

@@ -1,7 +1,8 @@
 package controllers
 
-import "github.com/ThiagoRodriguesdeSantana/desafio_conductor/go-server-server/go/repository"
+import "github.com/ThiagoRodriguesdeSantana/desafio_conductor/go/repository"
 
+//Controller to api
 type Controller struct {
 	Db repository.IRepositoryInterface
 }

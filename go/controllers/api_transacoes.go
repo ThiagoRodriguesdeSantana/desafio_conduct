@@ -17,6 +17,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+//Transactions return all transactions from account
 func (c *Controller) Transactions(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 

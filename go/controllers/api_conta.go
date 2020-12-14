@@ -17,6 +17,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+//Account retune only one account
 func (c *Controller) Account(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 

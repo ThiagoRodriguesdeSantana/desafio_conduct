@@ -11,8 +11,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"time"
 
 	// WARNING!
 	// Change this to a fully-qualified import path
@@ -21,13 +24,25 @@ import (
 	//
 	//    sw "github.com/myname/myrepo/go"
 	//
-	sw "./go"
+	sw "github.com/ThiagoRodriguesdeSantana/desafio_conductor/go"
 )
 
 func main() {
+
+	pathDb := os.Args[1]
+
+	fmt.Println(pathDb)
 	log.Printf("Server started")
 
-	router := sw.NewRouter()
+	router := sw.NewRouter(pathDb)
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	srv := &http.Server{
+		Handler:      router,
+		Addr:         "127.0.0.1:8181",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	fmt.Print("127.0.0.1:8181 Running...")
+	log.Fatal(srv.ListenAndServe())
+
 }
