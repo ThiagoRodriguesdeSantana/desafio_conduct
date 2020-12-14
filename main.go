@@ -29,7 +29,10 @@ import (
 
 func main() {
 
-	pathDb := os.Args[1]
+	var pathDb string
+	if len(os.Args) > 1 {
+		pathDb = os.Args[1]
+	}
 
 	fmt.Println(pathDb)
 	log.Printf("Server started")
@@ -42,7 +45,8 @@ func main() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	fmt.Print("127.0.0.1:8181 Running...")
+
+	fmt.Print("Running... \nhost: 127.0.0.1:8181 \nswagger ui: http://127.0.0.1:8181/swaggerui/ \n...")
 	log.Fatal(srv.ListenAndServe())
 
 }
