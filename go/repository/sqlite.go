@@ -180,7 +180,6 @@ func (db *SqliteDb) insertTransaction(transaction model.Transaction) {
 //FindAllAccounts get all accounts
 func (db *SqliteDb) FindAllAccounts() ([]model.Account, error) {
 
-	fmt.Println("enrtou aqui")
 	row, err := db.dbInstanse.Query("SELECT * FROM accounts")
 	if err != nil {
 		return nil, err
